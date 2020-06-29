@@ -54,8 +54,8 @@ print('Vector de valores de cada una de las filas de las Xs =',nueva_fila)
 #Suma total de los valores de cada uno de las xs
 suma_xs = np.sum(nueva_fila)
 print('Valor total de las xs =',suma_xs)
-x = [1,2,3,4,5,6,7,8,9,10] #número de muestras
-
+#x = [1,2,3,4,5,6,7,8,9,10] #número de muestras
+x = np.linspace(5,15,10)
 
 #Suma de las columnas
 nueva_columna = []
@@ -66,39 +66,39 @@ print('vector de valores de cada una de las columnas de las ys = ',nueva_columna
 #Suma total de cada una de las ys
 suma_ys = np.sum(nueva_columna)
 print('Valor total de las ys =',suma_ys)
-y = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] #número de muestras
-
-#Repersentación de cada una de las densidades marginales de X y Y sin ajustar
-
-plt.plot(x,nueva_fila)
-plt.title('Representación de la densidad marginal de X sin ajustar')
-plt.xlabel('Número de muestras para las X=10')
-plt.ylabel('Amplitud')
-plt.show()
+#y = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21] #número de muestras
+y = np.linspace(5,25,21)
 
 
-plt.plot(y,nueva_columna)
-plt.title('Representación de la densidad marginal de Y sin ajustar')
-plt.xlabel('Número de muestras para las Y=21')
-plt.ylabel('Amplitud')
-plt.show()
+#Encontrando los parámetros de la mejor curva de ajuste de la función marginal de xs
+mu1 = 0.027031758655329845
+sigma1 = 0.090172
+#función la función marginal de xs
+def norm1(x,mu1,sigma1):
+    return  1/(np.sqrt(2*np.pi*sigma1**2)) * np.exp(-(x-mu1)) ** 2/(2*sigma1**2)
 
-#x1 = np.linspace(5,15,10)
-a = 0.16
-b = 6
-c = 1
+xs1 = np.linspace(5,15,10)
+ys1 = norm1(xs1,mu1,sigma1)
 
-def norm(x,a,b,c):
-    return a * np.exp(-(x-b)^2)/2*c^2
+#Encontrando los parámetros de la mejor curva de ajuste de la función marginal de ys
+mu2 = 0.015403387353115333
+sigma2 = 0.04293904761904762
+#función la función marginal de xs
+def norm2(x,mu2,sigma2):
+    return  1/(np.sqrt(2*np.pi*sigma2**2)) * np.exp(-(x-mu2)) ** 2/(2*sigma2**2)
 
+xs2 = np.linspace(5,25,21)
+ys2 = norm2(xs2,mu2,sigma2)
 
 #función del modelo gaussiano
 
 def gaussiana(x,mu,sigma):
     return  1/(np.sqrt(2*np.pi*sigma**2)) * np.exp(-(x-mu)) ** 2/(2*sigma**2)
 
-#param,_ = curve_fit(gaussiana,x,y_x)
-#print(param)
+param1,_ = curve_fit(gaussiana,xs1,ys1)
+print('Parámetros de la mejor curva de ajuste de las Xs es =',param1)
+param2,_ = curve_fit(gaussiana,xs2,ys2)
+print('Parámetros de la mejor curva de ajuste de las Ys',param2)
 
 
 '''
